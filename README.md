@@ -7,8 +7,8 @@
 ## 🌟 Executive Summary
 
 **ResQHub** is an enterprise-grade full-stack web application developed for college hostels and university campuses. It unifies three key user ecosystems:
-1. **Hostel Students**: Instant One-Click SOS Emergency dispatch (Medical, Fire, Electrical Hazard, Security), digital maintenance reporting with photo attachments, and real-time 6-stage lifecycle tracking.
-2. **Wardens & Administrators**: Live incident triage, urgent emergency response acknowledgment, technician allocation, and facility analytics.
+1. **Hostel Students**: Instant One-Click SOS Emergency dispatch, digital maintenance reporting with photo attachments, 5-star service satisfaction rating, digital gate pass application with QR check-in/out, daily mess menu & meal rating, leave mess rebate, room inventory inspection checklist, and instant fee & fine tracker.
+2. **Wardens & Administrators**: Live incident triage board, urgent emergency response acknowledgment, technician allocation, gate pass approval & curfew enforcement, campus notice broadcasting, mess schedule management, room occupancy tracking, fee billing & penalty fine dispatch, and facility analytics.
 3. **Maintenance Staff / Technicians**: Mobile-friendly work order view, job status progression, and resolution remarks logging.
 4. **Theme Switcher**: Instant one-click toggle between White (Light) and Dark modes with persistent browser memory.
 
@@ -20,30 +20,38 @@
 resqhub/
 ├── frontend/                       # Modern React (Vite) Single Page Application
 │   ├── src/
-│   │   ├── components/             # Reusable UI widgets (Navbar, Badges, Modals, Timelines)
-│   │   │   ├── Navbar.jsx          # Role-aware navigation with in-app notification dropdown
+│   │   ├── components/             # Reusable UI widgets
+│   │   │   ├── Navbar.jsx          # Role-aware navigation with quick module shortcuts
 │   │   │   ├── StatusBadge.jsx     # Semantic status & priority indicators
 │   │   │   ├── Timeline.jsx        # 6-stage lifecycle stepper and audit trail logger
 │   │   │   ├── EmergencyModal.jsx  # SOS confirmation, type selection & immediate dispatch
 │   │   │   ├── AssignStaffModal.jsx# Warden allocation of technicians by specialization
-│   │   │   └── UpdateStatusModal.jsx # Staff & Warden status transitions & remarks
+│   │   │   ├── UpdateStatusModal.jsx # Staff & Warden status transitions & remarks
+│   │   │   └── RateComplaintModal.jsx # Student 5-star rating & review modal
 │   │   ├── pages/                  # Page views
 │   │   │   ├── LandingPage.jsx     # Hero page with one-click evaluator demo access
 │   │   │   ├── LoginPage.jsx       # Authentication with demo credential autofill
 │   │   │   ├── RegisterPage.jsx    # Student & staff registration
-│   │   │   ├── StudentDashboard.jsx# Student hub with SOS button, tickets summary, contacts
+│   │   │   ├── StudentDashboard.jsx# Student hub with SOS button, service cards, tickets summary
 │   │   │   ├── ReportComplaintPage.jsx # Issue creation form with image upload & priority
 │   │   │   ├── MyComplaintsPage.jsx# Filterable personal ticket history
-│   │   │   ├── ComplaintDetailPage.jsx # Comprehensive view with image, staff details, timeline
+│   │   │   ├── ComplaintDetailPage.jsx # Comprehensive view with image, staff details, timeline & rating
 │   │   │   ├── EmergencyContactsPage.jsx # 24x7 directory for ambulance, warden, security
-│   │   │   ├── AdminDashboard.jsx  # Warden command center with live SOS alerts & metrics
+│   │   │   ├── AdminDashboard.jsx  # Warden command center with live SOS alerts, metrics & welfare hub
 │   │   │   ├── AdminComplaintsPage.jsx # Advanced complaints table with search & assignment
 │   │   │   ├── AdminEmergenciesPage.jsx # Dedicated live SOS emergency dispatch board
-│   │   │   ├── AdminAnalyticsPage.jsx # Category & SLA breakdown charts
+│   │   │   ├── AdminAnalyticsPage.jsx # Category, SLA velocity & CSAT breakdown charts
 │   │   │   ├── StaffDashboard.jsx  # Technician assigned job orders & resolution logs
-│   │   │   └── NotificationsPage.jsx # In-app notification center
+│   │   │   ├── NotificationsPage.jsx # In-app notification center
+│   │   │   ├── GatePassPage.jsx    # Student gate pass request & digital QR pass card
+│   │   │   ├── AdminGatePassesPage.jsx # Warden gate pass triage, approval & security exit/entry log
+│   │   │   ├── NoticeBoardPage.jsx # Priority campus broadcasts & warden announcement publishing
+│   │   │   ├── MessManagementPage.jsx # Weekly dining schedule, meal rating & mess rebate cuts
+│   │   │   ├── RoomsAndAssetsPage.jsx # Room directory, occupancy tracker & asset condition checklist
+│   │   │   └── FeeTrackerPage.jsx  # Fee balance, mock digital payments, e-receipts & penalty fines
 │   │   ├── context/
-│   │   │   └── AuthContext.jsx     # Global JWT state & unread notifications counter
+│   │   │   ├── AuthContext.jsx     # Global JWT state & unread notifications counter
+│   │   │   └── ThemeContext.jsx    # Light / Dark theme state management
 │   │   ├── services/
 │   │   │   └── api.js              # Axios HTTP client with JWT Bearer interceptor
 │   │   ├── index.css               # Modern dark SaaS design tokens & animations
@@ -56,17 +64,27 @@ resqhub/
 │   ├── app/
 │   │   ├── models/                 # SQLAlchemy ORM Models
 │   │   │   ├── user.py             # User & MaintenanceStaff models with bcrypt hashes
-│   │   │   ├── complaint.py        # Complaint model with foreign keys & relationships
+│   │   │   ├── complaint.py        # Complaint model with rating & feedback fields
 │   │   │   ├── emergency.py        # EmergencyAlert model with timestamped states
 │   │   │   ├── history.py          # ComplaintHistory audit log entries
-│   │   │   └── notification.py     # In-app notifications
+│   │   │   ├── notification.py     # In-app notifications
+│   │   │   ├── gatepass.py         # GatePass model for outing and leave requests
+│   │   │   ├── notice.py           # Notice model for pinned broadcasts & category tags
+│   │   │   ├── mess.py             # MessMenu, MessFeedback & MessRebate models
+│   │   │   ├── room_asset.py       # Room and RoomAsset inventory checklist models
+│   │   │   └── fee.py              # FeePayment model for dues, receipts, and penalties
 │   │   ├── routes/                 # Flask Blueprints
 │   │   │   ├── auth.py             # /api/auth (register, login, me)
-│   │   │   ├── complaints.py       # /api/complaints (create, my, detail)
+│   │   │   ├── complaints.py       # /api/complaints (create, my, detail, rate)
 │   │   │   ├── emergencies.py      # /api/emergencies (trigger, my, detail)
-│   │   │   ├── admin.py            # /api/admin (triage, assign, resolve, analytics)
+│   │   │   ├── admin.py            # /api/admin (triage, assign, resolve, analytics, CSAT)
 │   │   │   ├── staff.py            # /api/staff (assigned tasks, update status)
-│   │   │   └── notifications.py    # /api/notifications (get all, mark read)
+│   │   │   ├── notifications.py    # /api/notifications (get all, mark read)
+│   │   │   ├── gatepasses.py       # /api/gatepasses (request, my, all, status approval)
+│   │   │   ├── notices.py          # /api/notices (get all, create, pin, delete)
+│   │   │   ├── mess.py             # /api/mess (menu, feedback, rebate)
+│   │   │   ├── rooms.py            # /api/rooms (list, assets checklist, inspect)
+│   │   │   └── fees.py             # /api/fees (my dues, pay, all, issue fine)
 │   │   ├── middleware/             # Role authorization & JWT decoding decorators
 │   │   ├── services/               # NotificationService (in-app + push hook)
 │   │   ├── utils/                  # File uploads, validation & database seeding
@@ -74,7 +92,7 @@ resqhub/
 │   ├── uploads/                    # Local storage for complaint photo evidence
 │   ├── config.py                   # Central environment configuration
 │   ├── run.py                      # Flask server entry point
-│   ├── test_workflows.py           # Automated end-to-end verification script
+│   ├── test_workflows.py           # Automated 16-workflow verification test suite
 │   └── requirements.txt
 │
 ├── database/

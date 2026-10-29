@@ -143,3 +143,60 @@ def get_complaint_detail(complaint_id):
         return jsonify({'error': 'Forbidden', 'message': 'Access to this complaint is restricted'}), 403
 
     return jsonify({'complaint': complaint.to_dict(include_history=True)}), 200
+
+
+@complaints_bp.route('/<int:complaint_id>/rate', methods=['POST'])
+@role_required('student')
+def rate_complaint(complaint_id):
+    user = get_current_user()
+    complaint = Complaint.query.get(complaint_id)
+    if not complaint:
+        return jsonify({'error': 'Not Found', 'message': 'Complaint not found'}), 404
+
+    if complaint.student_id != user.id:
+        return jsonify({'error': 'Forbidden', 'message': 'You can only rate your own complaints'}), 403
+
+    if complaint.status not in ('Resolved', 'Closed'):
+        return jsonify({'error': 'Bad Request', 'message': 'Only resolved complaints can be rated and closed'}), 400
+
+    data = request.get_json() or {}
+    rating = data.get('rating')
+    feedback_notes = data.get('feedback_notes', '').strip()
+
+    if not rating or not isinstance(rating, int) or rating < 1 or rating > 5:
+        return jsonify({'error': 'Bad Request', 'message': 'Rating must be an integer between 1 and 5'}), 400
+
+    try:
+        old_status = complaint.status
+        complaint.rating = rating
+        complaint.feedback_notes = feedback_notes
+        complaint.rated_at = datetime.utcnow()
+        complaint.status = 'Closed'
+
+        history = ComplaintHistory(
+            complaint_id=complaint.id,
+            old_status=old_status,
+            new_status='Closed',
+            changed_by=user.id,
+            remarks=f"Student rated {rating}/5 stars. Feedback: '{feedback_notes or 'No additional remarks'}'"
+        )
+        db.session.add(history)
+        db.session.commit()
+
+        if complaint.assigned_to:
+            NotificationService.send_notification(
+                user_id=complaint.assigned_to,
+                title="Service Feedback Received",
+                message=f"Student rated your resolution for #{complaint.complaint_id} with {rating} stars.",
+                notif_type='complaint'
+            )
+
+        return jsonify({
+            'message': 'Complaint rated and closed successfully',
+            'complaint': complaint.to_dict(include_history=True)
+        }), 200
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({'error': 'Server Error', 'message': str(e)}), 500
+

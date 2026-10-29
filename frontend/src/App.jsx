@@ -20,6 +20,14 @@ import { AdminAnalyticsPage } from './pages/AdminAnalyticsPage';
 import { StaffDashboard } from './pages/StaffDashboard';
 import { NotificationsPage } from './pages/NotificationsPage';
 
+// New Feature Pages
+import { GatePassPage } from './pages/GatePassPage';
+import { AdminGatePassesPage } from './pages/AdminGatePassesPage';
+import { NoticeBoardPage } from './pages/NoticeBoardPage';
+import { MessManagementPage } from './pages/MessManagementPage';
+import { RoomsAndAssetsPage } from './pages/RoomsAndAssetsPage';
+import { FeeTrackerPage } from './pages/FeeTrackerPage';
+
 // Protected Route wrapper with role check
 const ProtectedRoute = ({ children, allowedRoles }) => {
   const { user, loading } = useAuth();
@@ -86,6 +94,22 @@ export default function App() {
                     </ProtectedRoute>
                   } 
                 />
+                <Route 
+                  path="/gate-pass" 
+                  element={
+                    <ProtectedRoute allowedRoles={['student']}>
+                      <GatePassPage />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/fees" 
+                  element={
+                    <ProtectedRoute allowedRoles={['student']}>
+                      <FeeTrackerPage />
+                    </ProtectedRoute>
+                  } 
+                />
 
                 {/* Warden / Admin Routes */}
                 <Route 
@@ -120,6 +144,22 @@ export default function App() {
                     </ProtectedRoute>
                   } 
                 />
+                <Route 
+                  path="/admin/gate-passes" 
+                  element={
+                    <ProtectedRoute allowedRoles={['warden']}>
+                      <AdminGatePassesPage />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/admin/fees" 
+                  element={
+                    <ProtectedRoute allowedRoles={['warden']}>
+                      <FeeTrackerPage />
+                    </ProtectedRoute>
+                  } 
+                />
 
                 {/* Maintenance Staff Routes */}
                 <Route 
@@ -139,7 +179,33 @@ export default function App() {
                   } 
                 />
 
-                {/* Shared Authenticated Routes */}
+                {/* Shared Module Routes across Roles */}
+                <Route 
+                  path="/notices" 
+                  element={
+                    <ProtectedRoute allowedRoles={['student', 'warden', 'staff']}>
+                      <NoticeBoardPage />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/mess" 
+                  element={
+                    <ProtectedRoute allowedRoles={['student', 'warden']}>
+                      <MessManagementPage />
+                    </ProtectedRoute>
+                  } 
+                />
+                <Route 
+                  path="/rooms" 
+                  element={
+                    <ProtectedRoute allowedRoles={['student', 'warden', 'staff']}>
+                      <RoomsAndAssetsPage />
+                    </ProtectedRoute>
+                  } 
+                />
+
+                {/* Shared Detail & Notification Routes */}
                 <Route 
                   path="/complaints/:id" 
                   element={

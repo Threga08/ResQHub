@@ -80,6 +80,16 @@ export const AdminAnalyticsPage = () => {
           <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>Pending and in progress</div>
         </div>
 
+        <div className="card" style={{ borderLeft: '4px solid #F59E0B' }}>
+          <div style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', fontWeight: 600 }}>Satisfaction CSAT</div>
+          <div style={{ fontSize: '2.4rem', fontWeight: 800, color: '#F59E0B', marginTop: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.35rem' }}>
+            ⭐ {summary.average_rating || 5.0} <span style={{ fontSize: '1rem', color: 'var(--text-muted)' }}>/ 5</span>
+          </div>
+          <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '0.2rem' }}>
+            {summary.total_rated || 0} student verified ratings
+          </div>
+        </div>
+
       </div>
 
       {/* Main Charts Row */}

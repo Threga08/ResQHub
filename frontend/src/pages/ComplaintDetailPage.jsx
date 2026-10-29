@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, Calendar, User, MapPin, Phone, Wrench, Shield, 
-  CheckCircle, Clock, AlertTriangle, ExternalLink, Edit3, UserCheck 
+  CheckCircle, Clock, AlertTriangle, ExternalLink, Edit3, UserCheck, Star 
 } from 'lucide-react';
 import { complaintService } from '../services/api';
 import { useAuth } from '../context/AuthContext';
@@ -10,6 +10,7 @@ import { StatusBadge, PriorityBadge } from '../components/StatusBadge';
 import { ComplaintTimeline } from '../components/Timeline';
 import { AssignStaffModal } from '../components/AssignStaffModal';
 import { UpdateStatusModal } from '../components/UpdateStatusModal';
+import { RateComplaintModal } from '../components/RateComplaintModal';
 
 export const ComplaintDetailPage = () => {
   const { id } = useParams();
@@ -22,6 +23,7 @@ export const ComplaintDetailPage = () => {
 
   const [isAssignModalOpen, setIsAssignModalOpen] = useState(false);
   const [isStatusModalOpen, setIsStatusModalOpen] = useState(false);
+  const [isRateModalOpen, setIsRateModalOpen] = useState(false);
 
   useEffect(() => {
     loadDetail();
@@ -132,8 +134,70 @@ export const ComplaintDetailPage = () => {
                 <Edit3 size={14} /> Update Resolution Status
               </button>
             )}
+
+            {/* Student Rate & Close Ticket Button */}
+            {user?.role === 'student' && complaint.student_id === user?.id && complaint.status === 'Resolved' && (
+              <button 
+                onClick={() => setIsRateModalOpen(true)}
+                className="btn btn-primary" 
+                style={{ 
+                  fontSize: '0.85rem', 
+                  padding: '0.5rem 1rem', 
+                  backgroundColor: '#F59E0B', 
+                  borderColor: '#D97706',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.4rem',
+                  boxShadow: '0 0 12px rgba(245, 158, 11, 0.4)'
+                }}
+              >
+                <Star size={16} fill="#FFFFFF" /> Rate & Close Ticket
+              </button>
+            )}
           </div>
         </div>
+
+        {/* Student Rating & Feedback Banner if already rated */}
+        {complaint.rating && (
+          <div style={{
+            margin: '1.25rem 0',
+            padding: '1.25rem',
+            backgroundColor: 'rgba(245, 158, 11, 0.08)',
+            border: '1px solid rgba(245, 158, 11, 0.3)',
+            borderRadius: 'var(--radius-md)'
+          }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#F59E0B' }}>
+                  Student Satisfaction Rating:
+                </span>
+                <div style={{ display: 'flex', gap: '2px' }}>
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <Star 
+                      key={s} 
+                      size={18} 
+                      fill={s <= complaint.rating ? '#F59E0B' : 'transparent'} 
+                      color={s <= complaint.rating ? '#F59E0B' : 'var(--text-muted)'} 
+                    />
+                  ))}
+                </div>
+                <span style={{ fontSize: '0.9rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                  {complaint.rating} / 5
+                </span>
+              </div>
+              {complaint.rated_at && (
+                <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>
+                  Rated {new Date(complaint.rated_at).toLocaleDateString()}
+                </span>
+              )}
+            </div>
+            {complaint.feedback_notes && (
+              <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', fontStyle: 'italic', margin: 0 }}>
+                "{complaint.feedback_notes}"
+              </p>
+            )}
+          </div>
+        )}
 
         {/* Issue Details */}
         <div style={{ margin: '1.75rem 0' }}>
@@ -244,6 +308,14 @@ export const ComplaintDetailPage = () => {
         onSuccess={loadDetail}
       />
 
+      <RateComplaintModal
+        isOpen={isRateModalOpen}
+        complaint={complaint}
+        onClose={() => setIsRateModalOpen(false)}
+        onRated={loadDetail}
+      />
+
     </div>
   );
 };
+

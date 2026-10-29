@@ -219,13 +219,30 @@ def get_staff():
 @admin_bp.route('/analytics', methods=['GET'])
 @role_required('warden')
 def get_analytics():
+    from ..models import GatePass, MessRebate, FeePayment
+
     total_complaints = Complaint.query.count()
     pending_complaints = Complaint.query.filter(Complaint.status.in_(['Submitted', 'Acknowledged'])).count()
     in_progress_complaints = Complaint.query.filter(Complaint.status.in_(['Assigned', 'In Progress'])).count()
     resolved_complaints = Complaint.query.filter(Complaint.status.in_(['Resolved', 'Closed'])).count()
 
+    # Maintenance Ratings
+    rated_complaints = Complaint.query.filter(Complaint.rating.isnot(None)).all()
+    avg_rating = round(sum(c.rating for c in rated_complaints) / len(rated_complaints), 1) if rated_complaints else 5.0
+    total_rated = len(rated_complaints)
+
     active_emergencies = EmergencyAlert.query.filter(EmergencyAlert.status.in_(['Alert Sent', 'Acknowledged', 'Response in Progress'])).count()
     total_emergencies = EmergencyAlert.query.count()
+
+    # Gate Passes stats
+    pending_passes = GatePass.query.filter_by(status='Pending').count()
+    active_out_passes = GatePass.query.filter_by(status='Out').count()
+
+    # Mess rebate stats
+    pending_rebates = MessRebate.query.filter_by(status='Pending').count()
+
+    # Fee stats
+    pending_fees = FeePayment.query.filter(FeePayment.status.in_(['Pending', 'Overdue'])).count()
 
     # Category breakdown
     categories = ['Plumbing', 'Electrical', 'Water', 'Wi-Fi/Internet', 'Furniture', 'Cleaning', 'Other']
@@ -255,7 +272,13 @@ def get_analytics():
             'in_progress_complaints': in_progress_complaints,
             'resolved_complaints': resolved_complaints,
             'active_emergencies': active_emergencies,
-            'total_emergencies': total_emergencies
+            'total_emergencies': total_emergencies,
+            'average_rating': avg_rating,
+            'total_rated': total_rated,
+            'pending_passes': pending_passes,
+            'active_out_passes': active_out_passes,
+            'pending_rebates': pending_rebates,
+            'pending_fees': pending_fees
         },
         'by_category': by_category,
         'by_priority': by_priority,

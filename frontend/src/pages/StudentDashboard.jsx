@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   AlertTriangle, Wrench, Clock, CheckCircle2, FileText, 
-  ArrowRight, PhoneCall, ShieldAlert, AlertOctagon, PlusCircle, ExternalLink 
+  ArrowRight, PhoneCall, ShieldAlert, AlertOctagon, PlusCircle, ExternalLink,
+  Ticket, Megaphone, Utensils, Home, CreditCard
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { complaintService, emergencyService } from '../services/api';
@@ -186,6 +187,64 @@ export const StudentDashboard = () => {
           </div>
         </div>
 
+      </div>
+
+      {/* Quick Access Portal Modules */}
+      <div style={{ marginBottom: '2.5rem' }}>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1rem' }}>
+          Hostel Services & Resident Hub
+        </h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem' }}>
+          <Link to="/gate-pass" className="card" style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', textDecoration: 'none' }}>
+            <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: 'rgba(99, 102, 241, 0.15)', color: '#818CF8', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Ticket size={20} />
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-primary)' }}>Gate Pass</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Digital pass & curfew permission</div>
+            </div>
+          </Link>
+
+          <Link to="/notices" className="card" style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', textDecoration: 'none' }}>
+            <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: 'rgba(239, 68, 68, 0.15)', color: '#EF4444', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Megaphone size={20} />
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-primary)' }}>Notice Board</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Urgent announcements & alerts</div>
+            </div>
+          </Link>
+
+          <Link to="/mess" className="card" style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', textDecoration: 'none' }}>
+            <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: 'rgba(245, 158, 11, 0.15)', color: '#F59E0B', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Utensils size={20} />
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-primary)' }}>Mess & Dining</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Weekly menu, rating & rebate</div>
+            </div>
+          </Link>
+
+          <Link to="/rooms" className="card" style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', textDecoration: 'none' }}>
+            <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#10B981', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Home size={20} />
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-primary)' }}>Room & Inventory</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Furniture checklist & inspection</div>
+            </div>
+          </Link>
+
+          <Link to="/fees" className="card" style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', textDecoration: 'none' }}>
+            <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: 'rgba(59, 130, 246, 0.15)', color: '#60A5FA', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <CreditCard size={20} />
+            </div>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-primary)' }}>Fees & Fines</div>
+              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Dues balance & e-receipts</div>
+            </div>
+          </Link>
+        </div>
       </div>
 
       {/* Main Grid: Recent Complaints & Emergency Contacts */}

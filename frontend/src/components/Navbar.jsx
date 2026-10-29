@@ -89,37 +89,68 @@ export const Navbar = () => {
         </Link>
 
         {/* Navigation Links based on role */}
+        {/* Navigation Links based on role */}
         {user ? (
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
             {user.role === 'student' && (
               <>
-                <Link to="/student" style={{ fontSize: '0.875rem', fontWeight: 600, color: isActive('/student') ? '#818CF8' : 'var(--text-secondary)' }}>
+                <Link to="/student" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/student') ? '#818CF8' : 'var(--text-secondary)' }}>
                   Dashboard
                 </Link>
-                <Link to="/report" style={{ fontSize: '0.875rem', fontWeight: 600, color: isActive('/report') ? '#818CF8' : 'var(--text-secondary)' }}>
+                <Link to="/report" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/report') ? '#818CF8' : 'var(--text-secondary)' }}>
                   Report Issue
                 </Link>
-                <Link to="/my-complaints" style={{ fontSize: '0.875rem', fontWeight: 600, color: isActive('/my-complaints') ? '#818CF8' : 'var(--text-secondary)' }}>
-                  My Complaints
+                <Link to="/my-complaints" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/my-complaints') ? '#818CF8' : 'var(--text-secondary)' }}>
+                  Complaints
                 </Link>
-                <Link to="/emergency-contacts" style={{ fontSize: '0.875rem', fontWeight: 600, color: isActive('/emergency-contacts') ? '#818CF8' : 'var(--text-secondary)' }}>
-                  Emergency Directory
+                <Link to="/gate-pass" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/gate-pass') ? '#818CF8' : 'var(--text-secondary)' }}>
+                  Gate Pass
+                </Link>
+                <Link to="/notices" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/notices') ? '#818CF8' : 'var(--text-secondary)' }}>
+                  Notices
+                </Link>
+                <Link to="/mess" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/mess') ? '#818CF8' : 'var(--text-secondary)' }}>
+                  Mess
+                </Link>
+                <Link to="/rooms" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/rooms') ? '#818CF8' : 'var(--text-secondary)' }}>
+                  Rooms & Assets
+                </Link>
+                <Link to="/fees" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/fees') ? '#818CF8' : 'var(--text-secondary)' }}>
+                  Fees & Fines
+                </Link>
+                <Link to="/emergency-contacts" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/emergency-contacts') ? '#818CF8' : 'var(--text-secondary)' }}>
+                  Directory
                 </Link>
               </>
             )}
 
             {user.role === 'warden' && (
               <>
-                <Link to="/admin" style={{ fontSize: '0.875rem', fontWeight: 600, color: isActive('/admin') ? '#818CF8' : 'var(--text-secondary)' }}>
-                  Dashboard
+                <Link to="/admin" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/admin') ? '#818CF8' : 'var(--text-secondary)' }}>
+                  Command
                 </Link>
-                <Link to="/admin/emergencies" style={{ fontSize: '0.875rem', fontWeight: 600, color: isActive('/admin/emergencies') ? '#EF4444' : 'var(--text-secondary)' }}>
-                  Emergency Alerts
+                <Link to="/admin/emergencies" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/admin/emergencies') ? '#EF4444' : 'var(--text-secondary)' }}>
+                  SOS Alerts
                 </Link>
-                <Link to="/admin/complaints" style={{ fontSize: '0.875rem', fontWeight: 600, color: isActive('/admin/complaints') ? '#818CF8' : 'var(--text-secondary)' }}>
-                  All Complaints
+                <Link to="/admin/complaints" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/admin/complaints') ? '#818CF8' : 'var(--text-secondary)' }}>
+                  Complaints
                 </Link>
-                <Link to="/admin/analytics" style={{ fontSize: '0.875rem', fontWeight: 600, color: isActive('/admin/analytics') ? '#818CF8' : 'var(--text-secondary)' }}>
+                <Link to="/admin/gate-passes" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/admin/gate-passes') ? '#818CF8' : 'var(--text-secondary)' }}>
+                  Gate Passes
+                </Link>
+                <Link to="/notices" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/notices') ? '#818CF8' : 'var(--text-secondary)' }}>
+                  Notices
+                </Link>
+                <Link to="/mess" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/mess') ? '#818CF8' : 'var(--text-secondary)' }}>
+                  Mess
+                </Link>
+                <Link to="/rooms" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/rooms') ? '#818CF8' : 'var(--text-secondary)' }}>
+                  Rooms
+                </Link>
+                <Link to="/admin/fees" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/admin/fees') ? '#818CF8' : 'var(--text-secondary)' }}>
+                  Fees & Fines
+                </Link>
+                <Link to="/admin/analytics" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/admin/analytics') ? '#818CF8' : 'var(--text-secondary)' }}>
                   Analytics
                 </Link>
               </>
@@ -127,11 +158,17 @@ export const Navbar = () => {
 
             {user.role === 'staff' && (
               <>
-                <Link to="/staff" style={{ fontSize: '0.875rem', fontWeight: 600, color: isActive('/staff') ? '#818CF8' : 'var(--text-secondary)' }}>
-                  Staff Dashboard
+                <Link to="/staff" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/staff') ? '#818CF8' : 'var(--text-secondary)' }}>
+                  Dashboard
                 </Link>
-                <Link to="/staff/tasks" style={{ fontSize: '0.875rem', fontWeight: 600, color: isActive('/staff/tasks') ? '#818CF8' : 'var(--text-secondary)' }}>
+                <Link to="/staff/tasks" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/staff/tasks') ? '#818CF8' : 'var(--text-secondary)' }}>
                   Assigned Complaints
+                </Link>
+                <Link to="/notices" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/notices') ? '#818CF8' : 'var(--text-secondary)' }}>
+                  Notices
+                </Link>
+                <Link to="/rooms" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/rooms') ? '#818CF8' : 'var(--text-secondary)' }}>
+                  Room Checklists
                 </Link>
               </>
             )}

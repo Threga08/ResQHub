@@ -52,7 +52,8 @@ export const complaintService = {
     });
   },
   getMyComplaints: (params) => api.get('/complaints/my', { params }),
-  getDetail: (id) => api.get(`/complaints/${id}`)
+  getDetail: (id) => api.get(`/complaints/${id}`),
+  rate: (id, rating, feedback_notes) => api.post(`/complaints/${id}/rate`, { rating, feedback_notes })
 };
 
 export const emergencyService = {
@@ -83,3 +84,42 @@ export const notificationService = {
   markAsRead: (id) => api.put(`/notifications/${id}/read`),
   markAllAsRead: () => api.put('/notifications/read-all')
 };
+
+export const gatePassService = {
+  request: (data) => api.post('/gatepasses', data),
+  getMyPasses: () => api.get('/gatepasses/my'),
+  getAll: (params) => api.get('/gatepasses', { params }),
+  updateStatus: (id, status, rejection_reason) => api.put(`/gatepasses/${id}/status`, { status, rejection_reason })
+};
+
+export const noticeService = {
+  getAll: (params) => api.get('/notices', { params }),
+  create: (data) => api.post('/notices', data),
+  delete: (id) => api.delete(`/notices/${id}`),
+  togglePin: (id) => api.put(`/notices/${id}/pin`)
+};
+
+export const messService = {
+  getMenu: () => api.get('/mess/menu'),
+  updateMenuItem: (id, data) => api.put(`/mess/menu/${id}`, data),
+  submitFeedback: (data) => api.post('/mess/feedback', data),
+  getFeedbacks: () => api.get('/mess/feedback'),
+  requestRebate: (data) => api.post('/mess/rebate', data),
+  getMyRebates: () => api.get('/mess/rebate/my'),
+  getAllRebates: (params) => api.get('/mess/rebates', { params }),
+  updateRebateStatus: (id, status) => api.put(`/mess/rebates/${id}/status`, { status })
+};
+
+export const roomService = {
+  getRooms: (params) => api.get('/rooms', { params }),
+  getAssets: (roomNumber) => api.get(`/rooms/${roomNumber}/assets`),
+  inspectAsset: (assetId, data) => api.put(`/rooms/assets/${assetId}/inspect`, data)
+};
+
+export const feeService = {
+  getMyFees: () => api.get('/fees/my'),
+  pay: (data) => api.post('/fees/pay', data),
+  getAll: (params) => api.get('/fees', { params }),
+  issue: (data) => api.post('/fees/issue', data)
+};
+

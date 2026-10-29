@@ -4,7 +4,10 @@ from flask_cors import CORS
 from flask_jwt_extended import JWTManager
 from sqlalchemy import create_engine
 from .models import db
-from .routes import auth_bp, complaints_bp, emergencies_bp, admin_bp, staff_bp, notifications_bp
+from .routes import (
+    auth_bp, complaints_bp, emergencies_bp, admin_bp, staff_bp, notifications_bp,
+    gatepasses_bp, notices_bp, mess_bp, rooms_bp, fees_bp
+)
 from .utils.seed_data import seed_database
 from config import Config
 
@@ -46,6 +49,11 @@ def create_app(config_class=Config):
     app.register_blueprint(admin_bp)
     app.register_blueprint(staff_bp)
     app.register_blueprint(notifications_bp)
+    app.register_blueprint(gatepasses_bp)
+    app.register_blueprint(notices_bp)
+    app.register_blueprint(mess_bp)
+    app.register_blueprint(rooms_bp)
+    app.register_blueprint(fees_bp)
 
     # Serve uploaded images statically
     @app.route('/api/uploads/<path:filename>', methods=['GET'])

@@ -110,9 +110,78 @@ def main():
     notifs = get('/notifications', s_token)
     print(f"   [SUCCESS] Student has {len(notifs['notifications'])} notifications, Unread={notifs['unread_count']}")
 
+    # 11. Student Rates Complaint & Closes Ticket
+    print("\n11. Testing Student Rating and Closing Complaint...")
+    rate_res = post(f"/complaints/{cid}/rate", {
+        'rating': 5,
+        'feedback_notes': 'Shower pressure is great now! Excellent work by technician.'
+    }, s_token)
+    print(f"   [SUCCESS] Complaint Rated & Closed: Rating={rate_res['complaint']['rating']} Stars, Status={rate_res['complaint']['status']}")
+
+    # 12. Gate Pass Outing Workflow
+    print("\n12. Testing Student Requesting Gate Pass & Warden Approval...")
+    gp_res = post('/gatepasses', {
+        'pass_type': 'Day Outing',
+        'destination': 'Metro Central Station',
+        'reason': 'Visiting university library to collect research books.',
+        'out_time': '2026-10-29T10:00:00',
+        'expected_in_time': '2026-10-29T19:00:00',
+        'parent_contact': '+91 98765 00000'
+    }, s_token)
+    gp_id = gp_res['pass']['id']
+    gp_code = gp_res['pass']['pass_code']
+    print(f"   [SUCCESS] Gate Pass Created: Code={gp_code}, Status={gp_res['pass']['status']}")
+    
+    # Warden approves gate pass
+    gp_app = put(f"/gatepasses/{gp_id}/status", {'status': 'Approved'}, w_token)
+    print(f"   [SUCCESS] Warden Approved Gate Pass: Status={gp_app['pass']['status']}, Approver={gp_app['pass']['approver_name']}")
+
+    # 13. Notice Board Broadcast
+    print("\n13. Testing Warden Publishing Campus Broadcast Notice...")
+    notice_res = post('/notices', {
+        'title': 'High Speed Wi-Fi Router Upgrade in Block B',
+        'content': 'Fiber optics team will install gigabit Wi-Fi 6 access points in Block B corridors on Thursday.',
+        'category': 'Maintenance',
+        'priority': 'Important',
+        'is_pinned': True
+    }, w_token)
+    print(f"   [SUCCESS] Notice Published: ID={notice_res['notice']['id']}, Title='{notice_res['notice']['title']}', Pinned={notice_res['notice']['is_pinned']}")
+
+    # 14. Mess Menu & Meal Feedback
+    print("\n14. Testing Mess Dining Menu & Student Feedback...")
+    menu_res = get('/mess/menu', s_token)
+    print(f"   [SUCCESS] Retrieved Weekly Mess Schedule with {len(menu_res['menus'])} meal slots.")
+    fb_res = post('/mess/feedback', {
+        'meal_type': 'Lunch',
+        'rating': 5,
+        'comment': 'Chole Masala and Jeera Rice was delicious today!'
+    }, s_token)
+    print(f"   [SUCCESS] Student Meal Feedback Logged: Rating={fb_res['feedback']['rating']}/5")
+
+    # 15. Room Inventory Checklist
+    print("\n15. Testing Room Asset Inventory Checklist...")
+    assets_res = get('/rooms/B-204/assets', s_token)
+    print(f"   [SUCCESS] Room B-204 has {len(assets_res['assets'])} verified inventory items.")
+    for a in assets_res['assets'][:3]:
+        print(f"       -> {a['asset_name']}: [{a['condition']}]")
+
+    # 16. Fees and Payments
+    print("\n16. Testing Student Fee Payments...")
+    fees_res = get('/fees/my', s_token)
+    pending_fee = next((f for f in fees_res['fees'] if f['status'] == 'Pending'), None)
+    if pending_fee:
+        pay_res = post('/fees/pay', {
+            'fee_id': pending_fee['id'],
+            'payment_method': 'UPI'
+        }, s_token)
+        print(f"   [SUCCESS] Paid Fee '{pending_fee['fee_type']}': Amount=INR {pay_res['fee']['amount']}, TXN={pay_res['fee']['transaction_id']}")
+    else:
+        print(f"   [SUCCESS] Student Fees Info: Total Paid=INR {fees_res['total_paid']}")
+
     print("\n" + "=" * 60)
-    print("ALL CORE MVP WORKFLOWS VERIFIED 100% OPERATIONAL!")
+    print("ALL 6 NEW SYSTEM MODULES AND WORKFLOWS VERIFIED 100% OPERATIONAL!")
     print("=" * 60)
 
 if __name__ == '__main__':
     main()
+

@@ -17,6 +17,9 @@ class Complaint(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     resolved_at = db.Column(db.DateTime, nullable=True)
+    rating = db.Column(db.Integer, nullable=True) # 1 to 5 stars
+    feedback_notes = db.Column(db.Text, nullable=True)
+    rated_at = db.Column(db.DateTime, nullable=True)
 
     # Relationships
     history = db.relationship('ComplaintHistory', backref='complaint', lazy='dynamic', cascade='all, delete-orphan', order_by='ComplaintHistory.created_at.desc()')
@@ -42,7 +45,10 @@ class Complaint(db.Model):
             'assigned_staff_phone': self.assignee.phone if self.assignee else None,
             'created_at': self.created_at.isoformat() if self.created_at else None,
             'updated_at': self.updated_at.isoformat() if self.updated_at else None,
-            'resolved_at': self.resolved_at.isoformat() if self.resolved_at else None
+            'resolved_at': self.resolved_at.isoformat() if self.resolved_at else None,
+            'rating': self.rating,
+            'feedback_notes': self.feedback_notes,
+            'rated_at': self.rated_at.isoformat() if self.rated_at else None
         }
         if include_history:
             data['history'] = [h.to_dict() for h in self.history.all()]

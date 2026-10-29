@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   ShieldAlert, Wrench, Clock, CheckCircle2, AlertOctagon, 
-  UserCheck, ArrowRight, ExternalLink, Filter, Edit3, CheckCircle 
+  UserCheck, ArrowRight, ExternalLink, Filter, Edit3, CheckCircle,
+  Ticket, Megaphone, Utensils, Home, CreditCard, Star
 } from 'lucide-react';
 import { adminService } from '../services/api';
 import { StatusBadge, PriorityBadge } from '../components/StatusBadge';
@@ -158,6 +159,83 @@ export const AdminDashboard = () => {
           </div>
         </div>
 
+      </div>
+
+      {/* Operations & Student Welfare Hub */}
+      <div style={{ marginBottom: '2.5rem' }}>
+        <h2 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--text-primary)', marginBottom: '1rem' }}>
+          Hostel Facility & Student Welfare Hub
+        </h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+          
+          <Link to="/admin/gate-passes" className="card" style={{ padding: '1.25rem', textDecoration: 'none' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+              <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: 'rgba(99, 102, 241, 0.15)', color: '#818CF8', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Ticket size={20} />
+              </div>
+              {analytics?.summary?.pending_passes > 0 && (
+                <span style={{ fontSize: '0.75rem', fontWeight: 800, backgroundColor: 'rgba(245, 158, 11, 0.15)', color: '#F59E0B', padding: '0.2rem 0.5rem', borderRadius: 'var(--radius-full)' }}>
+                  {analytics.summary.pending_passes} Pending
+                </span>
+              )}
+            </div>
+            <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-primary)' }}>Gate Passes</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Review outing requests & curfews</div>
+          </Link>
+
+          <Link to="/notices" className="card" style={{ padding: '1.25rem', textDecoration: 'none' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+              <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: 'rgba(239, 68, 68, 0.15)', color: '#EF4444', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Megaphone size={20} />
+              </div>
+              <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#818CF8' }}>Broadcast</span>
+            </div>
+            <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-primary)' }}>Notice Board</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Publish official announcements</div>
+          </Link>
+
+          <Link to="/mess" className="card" style={{ padding: '1.25rem', textDecoration: 'none' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+              <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: 'rgba(245, 158, 11, 0.15)', color: '#F59E0B', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Utensils size={20} />
+              </div>
+              {analytics?.summary?.pending_rebates > 0 && (
+                <span style={{ fontSize: '0.75rem', fontWeight: 800, backgroundColor: 'rgba(245, 158, 11, 0.15)', color: '#F59E0B', padding: '0.2rem 0.5rem', borderRadius: 'var(--radius-full)' }}>
+                  {analytics.summary.pending_rebates} Rebates
+                </span>
+              )}
+            </div>
+            <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-primary)' }}>Mess & Dining</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Update menu & approve leave cuts</div>
+          </Link>
+
+          <Link to="/rooms" className="card" style={{ padding: '1.25rem', textDecoration: 'none' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+              <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#10B981', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Home size={20} />
+              </div>
+              <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#10B981' }}>Checklists</span>
+            </div>
+            <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-primary)' }}>Rooms & Assets</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Occupancy & furniture condition</div>
+          </Link>
+
+          <Link to="/admin/fees" className="card" style={{ padding: '1.25rem', textDecoration: 'none' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+              <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: 'rgba(59, 130, 246, 0.15)', color: '#60A5FA', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <CreditCard size={20} />
+              </div>
+              {analytics?.summary?.pending_fees > 0 && (
+                <span style={{ fontSize: '0.75rem', fontWeight: 800, backgroundColor: 'rgba(239, 68, 68, 0.15)', color: '#EF4444', padding: '0.2rem 0.5rem', borderRadius: 'var(--radius-full)' }}>
+                  {analytics.summary.pending_fees} Dues
+                </span>
+              )}
+            </div>
+            <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-primary)' }}>Fees & Fines</div>
+            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Issue penalties & track dues</div>
+          </Link>
+
+        </div>
       </div>
 
       {/* Active Emergencies Action Table */}
