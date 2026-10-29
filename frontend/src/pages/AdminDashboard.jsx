@@ -194,32 +194,6 @@ export const AdminDashboard = () => {
             <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Publish official announcements</div>
           </Link>
 
-          <Link to="/mess" className="card" style={{ padding: '1.25rem', textDecoration: 'none' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-              <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: 'rgba(245, 158, 11, 0.15)', color: '#F59E0B', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Utensils size={20} />
-              </div>
-              {analytics?.summary?.pending_rebates > 0 && (
-                <span style={{ fontSize: '0.75rem', fontWeight: 800, backgroundColor: 'rgba(245, 158, 11, 0.15)', color: '#F59E0B', padding: '0.2rem 0.5rem', borderRadius: 'var(--radius-full)' }}>
-                  {analytics.summary.pending_rebates} Rebates
-                </span>
-              )}
-            </div>
-            <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-primary)' }}>Mess & Dining</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Update menu & approve leave cuts</div>
-          </Link>
-
-          <Link to="/rooms" className="card" style={{ padding: '1.25rem', textDecoration: 'none' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-              <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#10B981', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Home size={20} />
-              </div>
-              <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#10B981' }}>Checklists</span>
-            </div>
-            <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-primary)' }}>Rooms & Assets</div>
-            <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Occupancy & furniture condition</div>
-          </Link>
-
           <Link to="/admin/fees" className="card" style={{ padding: '1.25rem', textDecoration: 'none' }}>
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
               <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: 'rgba(59, 130, 246, 0.15)', color: '#60A5FA', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

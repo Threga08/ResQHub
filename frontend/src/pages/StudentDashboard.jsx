@@ -215,26 +215,6 @@ export const StudentDashboard = () => {
             </div>
           </Link>
 
-          <Link to="/mess" className="card" style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', textDecoration: 'none' }}>
-            <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: 'rgba(245, 158, 11, 0.15)', color: '#F59E0B', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Utensils size={20} />
-            </div>
-            <div>
-              <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-primary)' }}>Mess & Dining</div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Weekly menu, rating & rebate</div>
-            </div>
-          </Link>
-
-          <Link to="/rooms" className="card" style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', textDecoration: 'none' }}>
-            <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: 'rgba(16, 185, 129, 0.15)', color: '#10B981', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <Home size={20} />
-            </div>
-            <div>
-              <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-primary)' }}>Room & Inventory</div>
-              <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Furniture checklist & inspection</div>
-            </div>
-          </Link>
-
           <Link to="/fees" className="card" style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', textDecoration: 'none' }}>
             <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: 'rgba(59, 130, 246, 0.15)', color: '#60A5FA', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <CreditCard size={20} />

@@ -24,8 +24,6 @@ import { NotificationsPage } from './pages/NotificationsPage';
 import { GatePassPage } from './pages/GatePassPage';
 import { AdminGatePassesPage } from './pages/AdminGatePassesPage';
 import { NoticeBoardPage } from './pages/NoticeBoardPage';
-import { MessManagementPage } from './pages/MessManagementPage';
-import { RoomsAndAssetsPage } from './pages/RoomsAndAssetsPage';
 import { FeeTrackerPage } from './pages/FeeTrackerPage';
 
 // Protected Route wrapper with role check
@@ -185,22 +183,6 @@ export default function App() {
                   element={
                     <ProtectedRoute allowedRoles={['student', 'warden', 'staff']}>
                       <NoticeBoardPage />
-                    </ProtectedRoute>
-                  } 
-                />
-                <Route 
-                  path="/mess" 
-                  element={
-                    <ProtectedRoute allowedRoles={['student', 'warden']}>
-                      <MessManagementPage />
-                    </ProtectedRoute>
-                  } 
-                />
-                <Route 
-                  path="/rooms" 
-                  element={
-                    <ProtectedRoute allowedRoles={['student', 'warden', 'staff']}>
-                      <RoomsAndAssetsPage />
                     </ProtectedRoute>
                   } 
                 />

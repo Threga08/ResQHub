@@ -7,8 +7,8 @@
 ## 🌟 Executive Summary
 
 **ResQHub** is an enterprise-grade full-stack web application developed for college hostels and university campuses. It unifies three key user ecosystems:
-1. **Hostel Students**: Instant One-Click SOS Emergency dispatch, digital maintenance reporting with photo attachments, 5-star service satisfaction rating, digital gate pass application with QR check-in/out, daily mess menu & meal rating, leave mess rebate, room inventory inspection checklist, and instant fee & fine tracker.
-2. **Wardens & Administrators**: Live incident triage board, urgent emergency response acknowledgment, technician allocation, gate pass approval & curfew enforcement, campus notice broadcasting, mess schedule management, room occupancy tracking, fee billing & penalty fine dispatch, and facility analytics.
+1. **Hostel Students**: Instant One-Click SOS Emergency dispatch, digital maintenance reporting with photo attachments, 5-star service satisfaction rating, digital gate pass application with QR check-in/out, campus notices, and instant fee & fine tracker.
+2. **Wardens & Administrators**: Live incident triage board, urgent emergency response acknowledgment, technician allocation, gate pass approval & curfew enforcement, campus notice broadcasting, fee billing & penalty fine dispatch, and facility analytics.
 3. **Maintenance Staff / Technicians**: Mobile-friendly work order view, job status progression, and resolution remarks logging.
 4. **Theme Switcher**: Instant one-click toggle between White (Light) and Dark modes with persistent browser memory.
 
@@ -46,8 +46,6 @@ resqhub/
 │   │   │   ├── GatePassPage.jsx    # Student gate pass request & digital QR pass card
 │   │   │   ├── AdminGatePassesPage.jsx # Warden gate pass triage, approval & security exit/entry log
 │   │   │   ├── NoticeBoardPage.jsx # Priority campus broadcasts & warden announcement publishing
-│   │   │   ├── MessManagementPage.jsx # Weekly dining schedule, meal rating & mess rebate cuts
-│   │   │   ├── RoomsAndAssetsPage.jsx # Room directory, occupancy tracker & asset condition checklist
 │   │   │   └── FeeTrackerPage.jsx  # Fee balance, mock digital payments, e-receipts & penalty fines
 │   │   ├── context/
 │   │   │   ├── AuthContext.jsx     # Global JWT state & unread notifications counter

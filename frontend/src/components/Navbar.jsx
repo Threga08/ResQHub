@@ -109,12 +109,6 @@ export const Navbar = () => {
                 <Link to="/notices" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/notices') ? '#818CF8' : 'var(--text-secondary)' }}>
                   Notices
                 </Link>
-                <Link to="/mess" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/mess') ? '#818CF8' : 'var(--text-secondary)' }}>
-                  Mess
-                </Link>
-                <Link to="/rooms" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/rooms') ? '#818CF8' : 'var(--text-secondary)' }}>
-                  Rooms & Assets
-                </Link>
                 <Link to="/fees" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/fees') ? '#818CF8' : 'var(--text-secondary)' }}>
                   Fees & Fines
                 </Link>
@@ -141,12 +135,6 @@ export const Navbar = () => {
                 <Link to="/notices" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/notices') ? '#818CF8' : 'var(--text-secondary)' }}>
                   Notices
                 </Link>
-                <Link to="/mess" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/mess') ? '#818CF8' : 'var(--text-secondary)' }}>
-                  Mess
-                </Link>
-                <Link to="/rooms" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/rooms') ? '#818CF8' : 'var(--text-secondary)' }}>
-                  Rooms
-                </Link>
                 <Link to="/admin/fees" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/admin/fees') ? '#818CF8' : 'var(--text-secondary)' }}>
                   Fees & Fines
                 </Link>
@@ -166,9 +154,6 @@ export const Navbar = () => {
                 </Link>
                 <Link to="/notices" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/notices') ? '#818CF8' : 'var(--text-secondary)' }}>
                   Notices
-                </Link>
-                <Link to="/rooms" style={{ fontSize: '0.85rem', fontWeight: 600, color: isActive('/rooms') ? '#818CF8' : 'var(--text-secondary)' }}>
-                  Room Checklists
                 </Link>
               </>
             )}
